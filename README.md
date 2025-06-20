@@ -13,6 +13,7 @@ Usage of gRPC as the transport, allows to reuse any existing infrastructure and 
 
 
 #### [`examples/metoro-io-server`](./examples/metoro-io-server)
+<details open><summary>example</summary>
 
 In the [`metoro-io/mcp-golang` server example](https://github.com/metoro-io/mcp-golang?tab=readme-ov-file#server-example), just replace the transport as follows:
 
@@ -50,7 +51,11 @@ func main(){
 }
 ```
 
-#### [`examples/mark3labs-server`](./examples/mark3labs-server) <details>
+</details>
+
+#### [`examples/mark3labs-server`](./examples/mark3labs-server)
+
+<details><summary>example</summary>
 
 In the [`mark3labs/mcp-go` server example](https://github.com/mark3labs/mcp-go?tab=readme-ov-file#quickstart), just replace the transport as follows:
 
