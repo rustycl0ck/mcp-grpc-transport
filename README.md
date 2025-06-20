@@ -50,7 +50,7 @@ func main(){
 }
 ```
 
-#### [`examples/mark3labs-server`](./examples/mark3labs-server)
+#### [`examples/mark3labs-server`](./examples/mark3labs-server) <details>
 
 In the [`mark3labs/mcp-go` server example](https://github.com/mark3labs/mcp-go?tab=readme-ov-file#quickstart), just replace the transport as follows:
 
@@ -92,6 +92,8 @@ func main(){
 	  )
 }
 ```
+
+</details>
 
 ## Example
 
