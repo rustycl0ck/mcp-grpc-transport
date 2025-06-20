@@ -11,9 +11,9 @@ Usage of gRPC as the transport, allows to reuse any existing infrastructure and 
 
 ## Usage
 
-
-#### [`examples/metoro-io-server`](./examples/metoro-io-server)
-<details open><summary>example</summary>
+### With `metoro-io` library
+> [!TIP]
+> Full example is available at [`examples/metoro-io-server/main.go`](./examples/metoro-io-server/main.go)
 
 In the [`metoro-io/mcp-golang` server example](https://github.com/metoro-io/mcp-golang?tab=readme-ov-file#server-example), just replace the transport as follows:
 
@@ -53,9 +53,11 @@ func main(){
 
 </details>
 
-#### [`examples/mark3labs-server`](./examples/mark3labs-server)
+### With `mark3labs` library
 
-<details><summary>example</summary>
+> [!TIP]
+> Full example is available at [`examples/mark3labs-server/main.go`](./examples/mark3labs-server/main.go)
+<details>
 
 In the [`mark3labs/mcp-go` server example](https://github.com/mark3labs/mcp-go?tab=readme-ov-file#quickstart), just replace the transport as follows:
 
@@ -79,23 +81,23 @@ In the [`mark3labs/mcp-go` server example](https://github.com/mark3labs/mcp-go?t
 ```
 
 You can customize the server with more options if required:
-```go
-import (
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
-)
-
-func main(){
+```diff
+  import (
+      "google.golang.org/grpc"
+      "google.golang.org/grpc/credentials/insecure"
+  )
+  
+  func main(){
 -     srv := grpctransport.NewGrpcServer(s)
 +     srv := grpctransport.NewGrpcServer(s,
-	  	grpctransport.WithPort(10051),
-	  	grpctransport.WithGrpcOpts(
-	  		grpc.UnaryInterceptor(loggingInterceptor),
-	  		grpc.MaxRecvMsgSize(1024*1024),        // 1MB
-	  		grpc.Creds(insecure.NewCredentials()), // TODO: Use TLS in production!
-	  	),
-	  )
-}
+          grpctransport.WithPort(10051),
+          grpctransport.WithGrpcOpts(
+              grpc.UnaryInterceptor(loggingInterceptor),
+              grpc.MaxRecvMsgSize(1024*1024),        // 1MB
+              grpc.Creds(insecure.NewCredentials()), // TODO: Use TLS in production!
+          ),
+      )
+  }
 ```
 
 </details>
