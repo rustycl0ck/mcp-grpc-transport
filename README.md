@@ -5,9 +5,15 @@ An MCP transport which uses gRPC for communication between the client and the MC
 Usage of gRPC as the transport, allows to reuse any existing infrastructure and processes for authentication and authorization.
 
 > [!NOTE]
-> Only supports [metoro-io/mcp-golang](https://github.com/metoro-io/mcp-golang) library currently
+> Supports only the two most widely used libraries currently:
+> - [metoro-io/mcp-golang](https://github.com/metoro-io/mcp-golang) - Upstream [PR #118](https://github.com/metoro-io/mcp-golang/pull/118)
+> - [mark3labs/mcp-go](https://github.com/mark3labs/mcp-go)
 
 ## Usage
+
+### With `metoro-io` library
+> [!TIP]
+> Full example is available at [`examples/metoro-io-server/main.go`](./examples/metoro-io-server/main.go)
 
 In the [`metoro-io/mcp-golang` server example](https://github.com/metoro-io/mcp-golang?tab=readme-ov-file#server-example), just replace the transport as follows:
 
@@ -45,6 +51,56 @@ func main(){
 }
 ```
 
+</details>
+
+### With `mark3labs` library
+
+> [!TIP]
+> Full example is available at [`examples/mark3labs-server/main.go`](./examples/mark3labs-server/main.go)
+<details>
+
+In the [`mark3labs/mcp-go` server example](https://github.com/mark3labs/mcp-go?tab=readme-ov-file#quickstart), just replace the transport as follows:
+
+```diff
++ import grpctransport "github.com/rustycl0ck/mcp-grpc-transport/pkg/mark3labs-transport/grpc"
+
+  func main() {
+      ...
+
+      // Start the server
+-     if err := server.ServeStdio(s); err != nil {
+-         fmt.Printf("Server error: %v\n", err)
+-     }
+
++     srv := grpctransport.NewGrpcServer(s)
++     if err := srv.Listen(context.Background()); err != nil {
++         fmt.Printf("Server error: %v\n", err)
++     }
+      ...
+  }
+```
+
+You can customize the server with more options if required:
+```diff
+  import (
+      "google.golang.org/grpc"
+      "google.golang.org/grpc/credentials/insecure"
+  )
+  
+  func main(){
+-     srv := grpctransport.NewGrpcServer(s)
++     srv := grpctransport.NewGrpcServer(s,
+          grpctransport.WithPort(10051),
+          grpctransport.WithGrpcOpts(
+              grpc.UnaryInterceptor(loggingInterceptor),
+              grpc.MaxRecvMsgSize(1024*1024),        // 1MB
+              grpc.Creds(insecure.NewCredentials()), // TODO: Use TLS in production!
+          ),
+      )
+  }
+```
+
+</details>
 
 ## Example
 
